@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 538, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=timeout))
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/util.py", line 57, in ensure_async
+    result = await obj
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/jupyter_client/asynchronous/channels.py", line 48, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 878, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/util.py", line 37, in wrapped
+    result = loop.run_until_complete(coro(self, *args, **kwargs))
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 579, in run_until_complete
+    return future.result()
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 480, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 705, in async_execute_cell
+    parent_msg_id, cell, exec_timeout, task_poll_output_msg
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 558, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "/Users/naiacasina/opt/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 588, in _async_handle_timeout
+    "Cell execution timed out", timeout, cell
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['# ------- DATA COLLECTION FROM DATASET: Population of 2 countries -----------', '', 'df = DataFrame(CSV.File("worldcities.csv"))', 'hiriak = df.country                          # Read the countries in dataset', '']
+...
+['df2 = DataFrame(Cities =cities2,Population=population2)  # Construct the dataframe out of the data', 'data2 = convert(Matrix, df2);', 'datuak2 = data2[5:170,2];', '', 'histogram([datuak1,datuak2], bins=20, alpha=0.8,label=["Japan" "Russia"], title="Histogram population by cities")']
+-------------------
+

@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exercise 1: Gibbs sampling &#8212; Econometrics II - Problem Set 3</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/togglebutton.js"></script>
+    <script type="text/javascript" src="_static/clipboard.min.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript">var togglebuttonSelector = '.toggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script type="text/javascript" src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" type="text/javascript" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script type="text/javascript">
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" type="text/javascript" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/logi.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Econometrics II - Problem Set 3</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
+   Exercise 1: Gibbs sampling
+  </a>
+ </li>
+</ul>
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/ps3.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/ps3.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Exercise 1: Gibbs sampling
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#settlement">
+     Settlement
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quick-reminder-theory-behind-the-code-can-be-jumped">
+     Quick reminder (theory behind the code, can be jumped)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sampling-of-alpha-and-c">
+     Sampling of
+     <span class="math notranslate nohighlight">
+      \(\alpha\)
+     </span>
+     and
+     <span class="math notranslate nohighlight">
+      \(c\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-data-collection-from-a-dataset">
+     (1.a) Data collection from a dataset
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-estimate-the-posterior-distribuiton-of-alpha-and-c-show-the-plot-of-the-distributions">
+     (1.b) Estimate the posterior distribuiton of
+     <span class="math notranslate nohighlight">
+      \(\alpha\)
+     </span>
+     and
+     <span class="math notranslate nohighlight">
+      \(c\)
+     </span>
+     . Show the plot of the distributions.
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-calculate-the-mean-of-the-alpha-and-c-as-you-increase-the-iteration-size">
+     (1.c) Calculate the mean of the
+     <span class="math notranslate nohighlight">
+      \(\alpha\)
+     </span>
+     and
+     <span class="math notranslate nohighlight">
+      \(c\)
+     </span>
+     as you increase the iteration size.
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-given-the-estimated-alpha-and-c-generate-data-using-pareto-x-alpha-c-plot-the-distribution">
+     (1.d) Given the estimated
+     <span class="math notranslate nohighlight">
+      \(\alpha\)
+     </span>
+     and
+     <span class="math notranslate nohighlight">
+      \(c\)
+     </span>
+     , generate data using Pareto(x|
+     <span class="math notranslate nohighlight">
+      \(\alpha\)
+     </span>
+     ,c). Plot the distribution.
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conclusions">
+     Conclusions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise-2">
+   Exercise 2
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-estimate-the-following-models-garch-1-1-garch-1-2-garch-2-1-and-garch-2-2-of-the-adjusted-closing-price">
+     (2.a) Estimate the following models: GARCH(1,1); GARCH(1,2); GARCH(2,1); and GARCH(2,2) of the adjusted closing price.
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#garch-p-q-functions">
+       Garch(p,q) functions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-calculate-aic-for-all-four-models-above">
+     (2.b) Calculate AIC for all four models above.
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-calculate-bic-for-all-four-models-above">
+     (2.c) Calculate BIC for all four models above.
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-choose-the-optimal-model-i-e-choose-the-combination-of-p-q-that-maximizes-either-aic-or-bic-and-explain-your-result">
+     (2.d) Choose the optimal model (i.e., choose the combination of (p,q) that maximizes either AIC or BIC) and explain your result.
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="exercise-1-gibbs-sampling">
+<h1>Exercise 1: Gibbs sampling<a class="headerlink" href="#exercise-1-gibbs-sampling" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># ------------ MAIN LIBRARIES TO USE ------------ </span>
+
+<span class="k">using</span> <span class="n">CSV</span><span class="p">,</span> <span class="n">DataFrames</span>
+<span class="k">using</span> <span class="n">Plots</span>
+<span class="k">using</span> <span class="n">Distributions</span><span class="p">,</span> <span class="n">Statistics</span>
+<span class="k">using</span> <span class="n">Optim</span><span class="p">,</span> <span class="n">NLopt</span>
+<span class="k">using</span> <span class="n">LinearAlgebra</span>
+<span class="k">using</span> <span class="n">Dates</span>
+<span class="k">import</span> <span class="n">Random</span>
+
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">14052021</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MersenneTwister(14052021)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="settlement">
+<h2>Settlement<a class="headerlink" href="#settlement" title="Permalink to this headline">¶</a></h2>
+<p>I thought it could be interesting to compare how the population of two different countries is distributed. The two countries that I have chosen are respectively <strong>Japan and Russia</strong>. Why these two? Well, for starters, it could be nice to see how the Pareto Law is met in two countries that have considerable differences:</p>
+<ol class="simple">
+<li><p>Japan is about 45 times smaller than Russia. Russia is approximately 17,098,242 km<span class="math notranslate nohighlight">\(^2\)</span>, while Japan is approximately 377,915 km<span class="math notranslate nohighlight">\(^2\)</span>, making Japan 2.21% the size of Russia.</p></li>
+<li><p>Interestingly, Russia is one of the most sparsely populated countries in the world, in part due to its harsh climate. The country has a population density of just 8.4 people per km<span class="math notranslate nohighlight">\(^2\)</span>. The population density in Japan is 347 people per km<span class="math notranslate nohighlight">\(^2\)</span>.</p></li>
+</ol>
+<p>We see huge differences,  indeed. Nevertheless, the population in Russia is most dense in the European area of the country around Saint Petersburg and Moscow. So let’s see if the population in these two different countries is similarly distributed.</p>
+</div>
+<div class="section" id="quick-reminder-theory-behind-the-code-can-be-jumped">
+<h2>Quick reminder (theory behind the code, can be jumped)<a class="headerlink" href="#quick-reminder-theory-behind-the-code-can-be-jumped" title="Permalink to this headline">¶</a></h2>
+<p>The Pareto distribution:</p>
+<div class="math notranslate nohighlight">
+\[\text{Pareto}(x|\alpha,c)=\frac{\alpha c^{\alpha}}{x^{\alpha + 1}}\]</div>
+<p>which is basically a power law distribution. The two parameters are <span class="math notranslate nohighlight">\(c\)</span>, the (necessarily positive) minimum possible value of <span class="math notranslate nohighlight">\(X\)</span> - the city with the smallest population, and <span class="math notranslate nohighlight">\(\alpha\)</span>, often called the Pareto index if we are dealing with the wealth of people, represents the proportion or the scaling relationship. In our case, the <strong>prior</strong> will be:</p>
+<div class="math notranslate nohighlight">
+\[p(\alpha,c)\propto \mathbb{1}(x&gt;c)\]</div>
+<p>Using Bayes’ theorem we define the <strong>posterior</strong> to be proportional to the likelihood times the prior:</p>
+<div class="math notranslate nohighlight">
+\[p(\alpha,c|x_{1:n})\propto p(x_{1:n}|\alpha,c)p(\alpha,c)\propto \mathbb{1}(\alpha,c&gt;0)\prod_{i=1}^{n}\frac{\alpha c^{\alpha}}{x_i^{\alpha+1}}\mathbb{1}(x_i&gt;c)=\frac{\alpha^{n}c^{n\alpha}}{(\prod x_i)^{\alpha+1}}\mathbb{1}(c&lt;x*)\mathbb{1}(\alpha,c&gt;0)\]</div>
+<p>To use Gibbs, we need to be able to sample <span class="math notranslate nohighlight">\(\alpha|x_{1:n}\)</span> and <span class="math notranslate nohighlight">\(c|x_{1:n}\)</span>. We need both posteriors. From the equation above:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\alpha|c,x_{1:n})\propto \frac{\alpha^{n}c^{n\alpha}}{(\prod x_i)^{\alpha}}\mathbb{1}(\alpha&gt;0)=\alpha^{n}\text{exp}\left(-\alpha\left(\sum \text{log}\,x_i-n\,\text{log}\,c\right)\right)\mathbb{1}(\alpha&gt;0)\\
+\propto \text{Gamma} \,\left(\alpha|n+1,\sum \text{log}\,x_i-n\,\text{log}\,c\right)\end{split}\]</div>
+<p>and:</p>
+<div class="math notranslate nohighlight">
+\[p(c|\alpha, x_{1:n})\propto c^{n\alpha}\mathbb{1}(0&lt;c&lt;x*)\]</div>
+</div>
+<div class="section" id="sampling-of-alpha-and-c">
+<h2>Sampling of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(c\)</span><a class="headerlink" href="#sampling-of-alpha-and-c" title="Permalink to this headline">¶</a></h2>
+<p>So, in order to use the Gibbs sampling algorithm to sample from the posterior <span class="math notranslate nohighlight">\(p(\alpha,c|x_{1:n})\)</span>,we initialize <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(c\)</span>, and then alternately update them by sampling:</p>
+<div class="math notranslate nohighlight">
+\[\alpha|c,x_{1:n}\sim \text{Gamma}\,\left(n+1,\sum \text{log}\,x_i-n\,\text{log}\,c\right)\]</div>
+<div class="math notranslate nohighlight">
+\[c|\alpha,x_{1:n}\sim \text{Mono}\,(n\alpha+1,x*)\]</div>
+</div>
+<div class="section" id="a-data-collection-from-a-dataset">
+<h2>(1.a) Data collection from a dataset<a class="headerlink" href="#a-data-collection-from-a-dataset" title="Permalink to this headline">¶</a></h2>
+<p><strong>Note</strong>: I will take the 170 most populated cities of each countries. This is nothing but a sampling strategy, and a common explanation to it is that small cities are often indistinguishable from rural areas and as a result they can be omitted from the sample selection (Brakman et al., 1999).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># ------- DATA COLLECTION FROM DATASET: Population of 2 countries -----------</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">CSV</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s">&quot;worldcities.csv&quot;</span><span class="p">))</span>
+<span class="n">hiriak</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">country</span>                          <span class="c"># Read the countries in dataset</span>
+
+<span class="c"># Data from Country 1</span>
+<span class="n">bai1</span> <span class="o">=</span> <span class="p">(</span><span class="n">hiriak</span><span class="o">.==</span><span class="s">&quot;Japan&quot;</span><span class="p">)</span>                    <span class="c"># Choose Country1 to analyse</span>
+<span class="n">population1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">bai1</span><span class="p">]</span>
+<span class="n">cities1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">city</span><span class="p">[</span><span class="n">bai1</span><span class="p">]</span>
+
+<span class="c"># Data from Country 2</span>
+<span class="n">bai2</span> <span class="o">=</span> <span class="p">(</span><span class="n">hiriak</span><span class="o">.==</span><span class="s">&quot;Russia&quot;</span><span class="p">)</span>                    <span class="c"># Choose Country2 to analyse</span>
+<span class="n">population2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">bai2</span><span class="p">]</span>
+<span class="n">cities2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">city</span><span class="p">[</span><span class="n">bai2</span><span class="p">]</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">Cities</span> <span class="o">=</span><span class="n">cities1</span><span class="p">,</span><span class="n">Population</span><span class="o">=</span><span class="n">population1</span><span class="p">)</span>  <span class="c"># Construct the dataframe out of the data</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">,</span> <span class="n">df1</span><span class="p">);</span>
+<span class="n">datuak1</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[</span><span class="mi">5</span><span class="o">:</span><span class="mi">170</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">Cities</span> <span class="o">=</span><span class="n">cities2</span><span class="p">,</span><span class="n">Population</span><span class="o">=</span><span class="n">population2</span><span class="p">)</span>  <span class="c"># Construct the dataframe out of the data</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">,</span> <span class="n">df2</span><span class="p">);</span>
+<span class="n">datuak2</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="mi">5</span><span class="o">:</span><span class="mi">170</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="n">histogram</span><span class="p">([</span><span class="n">datuak1</span><span class="p">,</span><span class="n">datuak2</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Japan&quot;</span> <span class="s">&quot;Russia&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Histogram population by cities&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="b-estimate-the-posterior-distribuiton-of-alpha-and-c-show-the-plot-of-the-distributions">
+<h2>(1.b) Estimate the posterior distribuiton of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(c\)</span>. Show the plot of the distributions.<a class="headerlink" href="#b-estimate-the-posterior-distribuiton-of-alpha-and-c-show-the-plot-of-the-distributions" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># ---------- MAIN FUNCTIONS --------------</span>
+
+<span class="k">function</span> <span class="n">Gibbs</span><span class="p">(</span><span class="n">reps</span><span class="o">::</span><span class="kt">Int</span><span class="p">,</span> <span class="n">burnin</span><span class="o">::</span><span class="kt">Int</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">chain</span> <span class="o">=</span> <span class="n">fill</span><span class="p">(</span><span class="nb">NaN</span><span class="p">,</span> <span class="p">(</span><span class="n">reps</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">alpha</span>   <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">c</span>   <span class="o">=</span> <span class="mf">100.</span>
+    <span class="n">n_data</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">x_star</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">reps</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">burnin</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Gamma</span><span class="p">(</span><span class="n">n_data</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.0</span><span class="o">./</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="o">-</span><span class="n">n_data</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">c</span><span class="p">))))</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">x_star</span><span class="o">*</span><span class="n">rand</span><span class="p">(</span><span class="n">Uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">^</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">n_data</span><span class="o">*</span><span class="n">alpha</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">end</span>
+        <span class="n">chain</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">:</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">alpha</span><span class="p">,</span><span class="n">c</span><span class="p">]</span>     <span class="c"># Construct</span>
+    <span class="k">end</span>
+    <span class="k">return</span> <span class="n">chain</span>
+<span class="k">end</span>
+    
+<span class="c"># Monomial Distribution</span>
+<span class="k">function</span> <span class="n">Monomial</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x_star</span><span class="p">,</span><span class="n">n_data</span><span class="p">)</span>
+    <span class="n">ran</span> <span class="o">=</span> <span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">x_star</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">ran</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">ran</span><span class="o">.^</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">n_data</span><span class="p">)</span>
+<span class="k">end</span>    
+        
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Monomial (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Compute Gibbs Sampling and Plot </span>
+<span class="n">chain1</span> <span class="o">=</span> <span class="n">Gibbs</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">datuak1</span><span class="p">);</span>
+<span class="n">chain2</span> <span class="o">=</span> <span class="n">Gibbs</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">datuak2</span><span class="p">);</span>
+<span class="n">plot</span><span class="p">([</span><span class="n">chain1</span><span class="p">,</span> <span class="n">chain2</span><span class="p">],</span><span class="n">layout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">seriestype</span><span class="o">=</span><span class="p">[</span><span class="o">:</span><span class="n">histogram</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Japan&quot;</span> <span class="s">&quot;Japan&quot;</span> <span class="s">&quot;Russia&quot;</span> <span class="s">&quot;Russia&quot;</span><span class="p">],</span><span class="n">title</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;α&quot;</span> <span class="s">&quot;c&quot;</span><span class="p">],</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ps3_9_0.svg" src="_images/ps3_9_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="c-calculate-the-mean-of-the-alpha-and-c-as-you-increase-the-iteration-size">
+<h2>(1.c) Calculate the mean of the <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(c\)</span> as you increase the iteration size.<a class="headerlink" href="#c-calculate-the-mean-of-the-alpha-and-c-as-you-increase-the-iteration-size" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Country 1</span>
+<span class="n">n1</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">chain1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">n1</span>
+    <span class="n">m1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">:</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">chain1</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="p">,</span><span class="o">:</span><span class="p">],</span><span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="c"># Country 2</span>
+<span class="n">n2</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">chain2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">n2</span>
+    <span class="n">m2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">:</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">chain2</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="p">,</span><span class="o">:</span><span class="p">],</span><span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="n">plot</span><span class="p">([</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">],</span><span class="n">layout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;&lt;α&gt;&quot;</span> <span class="s">&quot;&lt;c&gt;&quot;</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Japan&quot;</span> <span class="s">&quot;Japan&quot;</span> <span class="s">&quot;Russia&quot;</span> <span class="s">&quot;Russia&quot;</span><span class="p">],</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ps3_11_0.svg" src="_images/ps3_11_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="d-given-the-estimated-alpha-and-c-generate-data-using-pareto-x-alpha-c-plot-the-distribution">
+<h2>(1.d) Given the estimated <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(c\)</span>, generate data using Pareto(x|<span class="math notranslate nohighlight">\(\alpha\)</span>,c). Plot the distribution.<a class="headerlink" href="#d-given-the-estimated-alpha-and-c-generate-data-using-pareto-x-alpha-c-plot-the-distribution" title="Permalink to this headline">¶</a></h2>
+<p>We take first the converged values of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">reps</span><span class="o">=</span><span class="mi">200</span><span class="p">;</span>
+
+<span class="c"># ---- Country 1 ------</span>
+<span class="n">alpha1</span>  <span class="o">=</span> <span class="n">m1</span><span class="p">[</span><span class="k">end</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="n">m1</span><span class="p">[</span><span class="k">end</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">chain_trial1</span> <span class="o">=</span> <span class="n">fill</span><span class="p">(</span><span class="nb">NaN</span><span class="p">,</span> <span class="p">(</span><span class="n">reps</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">max_val1</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">(</span><span class="n">datuak1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">reps</span>
+    <span class="n">chain_trial1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Pareto</span><span class="p">(</span><span class="n">alpha1</span><span class="p">,</span><span class="n">c1</span><span class="p">))</span>    <span class="c"># Create Pareto sampling distribution from converged \alpha, c</span>
+<span class="k">end</span>
+
+<span class="c"># ----- Country 2 ------</span>
+<span class="n">alpha2</span>  <span class="o">=</span> <span class="n">m2</span><span class="p">[</span><span class="k">end</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="n">m2</span><span class="p">[</span><span class="k">end</span><span class="p">,</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">chain_trial2</span> <span class="o">=</span> <span class="n">fill</span><span class="p">(</span><span class="nb">NaN</span><span class="p">,</span> <span class="p">(</span><span class="n">reps</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">max_val2</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">(</span><span class="n">datuak2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">reps</span>
+    <span class="n">chain_trial2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Pareto</span><span class="p">(</span><span class="n">alpha2</span><span class="p">,</span><span class="n">c2</span><span class="p">))</span>   <span class="c"># Create Pareto sampling distribution from converged \alpha, c</span>
+<span class="k">end</span>
+
+<span class="c"># PLOT</span>
+<span class="n">histogram</span><span class="p">([</span><span class="n">chain_trial1</span><span class="p">[</span><span class="n">chain_trial1</span><span class="o">.&lt;</span><span class="n">maximum</span><span class="p">(</span><span class="n">datuak1</span><span class="p">)],</span><span class="n">chain_trial2</span><span class="p">[</span><span class="n">chain_trial2</span><span class="o">.&lt;</span><span class="n">maximum</span><span class="p">(</span><span class="n">datuak2</span><span class="p">)]],</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Data generation&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Japan Simulation&quot;</span> <span class="s">&quot;Russia Simulation&quot;</span><span class="p">])</span>   <span class="c"># We focus our attention on the data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ps3_14_0.svg" src="_images/ps3_14_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">([</span><span class="n">datuak1</span><span class="p">,</span><span class="n">chain_trial1</span><span class="p">[</span><span class="n">chain_trial1</span><span class="o">.&lt;</span><span class="n">maximum</span><span class="p">(</span><span class="n">datuak1</span><span class="p">)]],</span><span class="n">layout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">color</span><span class="o">=</span> <span class="p">[</span><span class="o">:</span><span class="n">cyan</span> <span class="o">:</span><span class="n">orange</span><span class="p">],</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="mi">500</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Japan population distribution&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Real data&quot;</span> <span class="s">&quot;Generated data&quot;</span><span class="p">]</span> <span class="p">)</span>   <span class="c"># We focus our attention on the data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ps3_15_0.svg" src="_images/ps3_15_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">([</span><span class="n">datuak2</span><span class="p">,</span><span class="n">chain_trial2</span><span class="p">[</span><span class="n">chain_trial2</span><span class="o">.&lt;</span><span class="n">maximum</span><span class="p">(</span><span class="n">datuak2</span><span class="p">)]],</span><span class="n">layout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">color</span><span class="o">=</span> <span class="p">[</span><span class="o">:</span><span class="n">cyan</span> <span class="o">:</span><span class="n">orange</span><span class="p">],</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="mi">500</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Russia population distribution&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Real data&quot;</span> <span class="s">&quot;Generated data&quot;</span><span class="p">]</span> <span class="p">)</span>   <span class="c"># We focus our attention on the data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ps3_16_0.svg" src="_images/ps3_16_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="conclusions">
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h2>
+<p>The size distribution of cities and the evolution of urban systems have been long-standing topics of research in urban studies, and we can appreaciate why computing the Pareto distribution of a specific country could be interesting: in this Problem Set, even if we analyse very distinct countries in many aspects (demography, geography, topography, total population, culture, history, etc.), Pareto Laws are observable. How the population is distributed in cities is, at least, a comparable characteristic between Japan and Russia. What these Pareto Laws could foresee, however, is out of the scope of this  project.</p>
+</div>
+</div>
+<div class="section" id="exercise-2">
+<h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h1>
+<p>Examining historical stock price of Google.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># ------------- MAIN FUNCTIONS TO USE --------------------</span>
+
+<span class="k">function</span> <span class="n">fmincon</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">startval</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="p">[],</span> <span class="n">r</span><span class="o">=</span><span class="p">[],</span> <span class="n">lb</span><span class="o">=</span><span class="p">[],</span> <span class="n">ub</span><span class="o">=</span><span class="p">[];</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">iterlim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c"># the objective is an anonymous function</span>
+    <span class="k">function</span> <span class="n">objective_function</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="n">grad</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">})</span>
+        <span class="n">obj_func_value</span> <span class="o">=</span> <span class="n">obj</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">obj_func_value</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="c"># impose the linear restrictions</span>
+    <span class="k">function</span> <span class="n">constraint_function</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">Vector</span><span class="p">,</span> <span class="n">grad</span><span class="o">::</span><span class="kt">Vector</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">x</span> <span class="o">.-</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">end</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">Opt</span><span class="p">(</span><span class="o">:</span><span class="n">LN_COBYLA</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">startval</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">min_objective!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">objective_function</span><span class="p">)</span>
+    <span class="c"># impose lower and/or upper bounds</span>
+    <span class="k">if</span> <span class="n">lb</span> <span class="o">!=</span> <span class="p">[]</span> <span class="n">lower_bounds!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">lb</span><span class="p">)</span> <span class="k">end</span>
+    <span class="k">if</span> <span class="n">ub</span> <span class="o">!=</span> <span class="p">[]</span> <span class="n">upper_bounds!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">ub</span><span class="p">)</span> <span class="k">end</span>
+    <span class="c"># impose linear restrictions, by looping over the rows</span>
+    <span class="k">if</span> <span class="n">R</span> <span class="o">!=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">size</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">equality_constraint!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">constraint_function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="o">:</span><span class="n">i</span><span class="p">,</span><span class="o">:</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">tol</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span>    
+    <span class="n">xtol_rel!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">tol</span><span class="p">)</span>
+    <span class="n">ftol_rel!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">tol</span><span class="p">)</span>
+    <span class="n">maxeval!</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">iterlim</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">objvalue</span><span class="p">,</span> <span class="n">xopt</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span> <span class="o">=</span> <span class="n">NLopt</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">startval</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xopt</span><span class="p">,</span> <span class="n">objvalue</span><span class="p">,</span> <span class="n">flag</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fmincon (generic function with 5 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># --------------- DATASET ---------------</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">CSV</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s">&quot;GOOG.csv&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">))</span>
+<span class="n">first</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">!</span><span class="p">,</span><span class="s">&quot;Adj Close&quot;</span><span class="p">];</span>               <span class="c"># Take closing price</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">100.0</span><span class="o">*</span><span class="n">diff</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>               <span class="c"># Compute log-returns</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">last</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Adj Close</th><th>Volume</th></tr><tr><th></th><th>Date</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Int64</th></tr></thead><tbody><p>7 rows × 7 columns</p><tr><th>1</th><td>2021-05-04</td><td>2369.74</td><td>2379.26</td><td>2311.7</td><td>2354.25</td><td>2354.25</td><td>1756000</td></tr><tr><th>2</th><td>2021-05-05</td><td>2368.42</td><td>2382.2</td><td>2351.41</td><td>2356.74</td><td>2356.74</td><td>1090300</td></tr><tr><th>3</th><td>2021-05-06</td><td>2350.64</td><td>2382.71</td><td>2342.34</td><td>2381.35</td><td>2381.35</td><td>1030900</td></tr><tr><th>4</th><td>2021-05-07</td><td>2400.0</td><td>2416.41</td><td>2390.0</td><td>2398.69</td><td>2398.69</td><td>1163600</td></tr><tr><th>5</th><td>2021-05-10</td><td>2374.89</td><td>2378.0</td><td>2334.73</td><td>2341.66</td><td>2341.66</td><td>1300300</td></tr><tr><th>6</th><td>2021-05-11</td><td>2291.86</td><td>2322.0</td><td>2283.0</td><td>2308.76</td><td>2308.76</td><td>1603300</td></tr><tr><th>7</th><td>2021-05-12</td><td>2261.71</td><td>2285.37</td><td>2235.01</td><td>2244.89</td><td>2244.89</td><td>847188</td></tr></tbody></table></div></div>
+</div>
+<div class="section" id="a-estimate-the-following-models-garch-1-1-garch-1-2-garch-2-1-and-garch-2-2-of-the-adjusted-closing-price">
+<h2>(2.a) Estimate the following models: GARCH(1,1); GARCH(1,2); GARCH(2,1); and GARCH(2,2) of the adjusted closing price.<a class="headerlink" href="#a-estimate-the-following-models-garch-1-1-garch-1-2-garch-2-1-and-garch-2-2-of-the-adjusted-closing-price" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="garch-p-q-functions">
+<h3>Garch(p,q) functions<a class="headerlink" href="#garch-p-q-functions" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">garch11</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c"># dissect the parameter vector</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">resid</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span> <span class="o">.-</span> <span class="n">mu</span> <span class="o">.-</span> <span class="n">rho</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c"># initialize variance; either of these next two are reasonable choices</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="c">#h[1] = var(y)</span>
+    <span class="n">rsq</span> <span class="o">=</span> <span class="n">resid</span><span class="o">.^</span><span class="mf">2.0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">2</span><span class="o">:</span><span class="n">n</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">omega</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">*</span><span class="n">rsq</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta</span><span class="o">*</span><span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">end</span>
+    <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="n">garch12</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c"># dissect the parameter vector</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">alpha1</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">beta1</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">resid</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span> <span class="o">.-</span> <span class="n">mu</span> <span class="o">.-</span> <span class="n">rho</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c"># initialize variance; either of these next two are reasonable choices</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="c">#h[2] = omega + alpha1*rsq[1] + beta1*h[1]</span>
+    <span class="c">#h[1] = var(y)</span>
+    <span class="n">rsq</span> <span class="o">=</span> <span class="n">resid</span><span class="o">.^</span><span class="mf">2.0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">3</span><span class="o">:</span><span class="n">n</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">omega</span> <span class="o">+</span> <span class="n">alpha1</span><span class="o">*</span><span class="n">rsq</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">alpha2</span><span class="o">*</span><span class="n">rsq</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta1</span><span class="o">*</span><span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">end</span>
+    <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="n">garch21</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c"># dissect the parameter vector</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">alpha1</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">beta1</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">beta2</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">resid</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span> <span class="o">.-</span> <span class="n">mu</span> <span class="o">.-</span> <span class="n">rho</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c"># initialize variance; either of these next two are reasonable choices</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="c">#h[2] = omega + alpha1*rsq[1] + beta1*h[1]</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">rsq</span> <span class="o">=</span> <span class="n">resid</span><span class="o">.^</span><span class="mf">2.0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">3</span><span class="o">:</span><span class="n">n</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">omega</span> <span class="o">+</span> <span class="n">alpha1</span><span class="o">*</span><span class="n">rsq</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta1</span><span class="o">*</span><span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta2</span><span class="o">*</span><span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">end</span>
+    <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="n">garch22</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c"># dissect the parameter vector</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">alpha1</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">beta1</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">beta2</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">resid</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span> <span class="o">.-</span> <span class="n">mu</span> <span class="o">.-</span> <span class="n">rho</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">resid</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c"># initialize variance; either of these next two are reasonable choices</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="c">#h[2] = omega + alpha1*rsq[1] + beta1*h[1]</span>
+    <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">rsq</span> <span class="o">=</span> <span class="n">resid</span><span class="o">.^</span><span class="mf">2.0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">3</span><span class="o">:</span><span class="n">n</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">omega</span> <span class="o">+</span> <span class="n">alpha1</span><span class="o">*</span><span class="n">rsq</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">alpha2</span><span class="o">*</span><span class="n">rsq</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta1</span><span class="o">*</span><span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">beta2</span><span class="o">*</span><span class="n">h</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">end</span>
+    <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>garch22 (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># ----- GARCH (1,1) --------</span>
+<span class="n">thetastart11</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.0</span><span class="p">;</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-&gt;</span> <span class="o">-</span><span class="n">sum</span><span class="p">(</span><span class="n">garch11</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">thetahat11</span><span class="p">,</span> <span class="n">logL11</span><span class="p">,</span> <span class="n">junk</span>  <span class="o">=</span> <span class="n">fmincon</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">thetastart11</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[</span><span class="o">-</span><span class="nb">Inf</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">thetahat11</span> <span class="o">=</span> <span class="p">[</span><span class="n">thetahat11</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">4</span><span class="p">];</span> <span class="nb">NaN</span><span class="p">;</span> <span class="n">thetahat11</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span> <span class="nb">NaN</span><span class="p">]</span>
+<span class="c"># ----- GARCH (1,2) --------</span>
+<span class="n">thetastart12</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.0</span><span class="p">;</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-&gt;</span> <span class="o">-</span><span class="n">sum</span><span class="p">(</span><span class="n">garch12</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">thetahat12</span><span class="p">,</span> <span class="n">logL12</span><span class="p">,</span> <span class="n">junk</span>  <span class="o">=</span> <span class="n">fmincon</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">thetastart12</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[</span><span class="o">-</span><span class="nb">Inf</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">thetahat12</span> <span class="o">=</span> <span class="p">[</span><span class="n">thetahat12</span><span class="p">;</span> <span class="nb">NaN</span><span class="p">]</span>
+<span class="c"># ----- GARCH (2,1) --------</span>
+<span class="n">thetastart21</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.0</span><span class="p">;</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-&gt;</span> <span class="o">-</span><span class="n">sum</span><span class="p">(</span><span class="n">garch21</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">thetahat21</span><span class="p">,</span> <span class="n">logL21</span><span class="p">,</span> <span class="n">junk</span>  <span class="o">=</span> <span class="n">fmincon</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">thetastart21</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[</span><span class="o">-</span><span class="nb">Inf</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">thetahat21</span> <span class="o">=</span> <span class="p">[</span><span class="n">thetahat21</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">4</span><span class="p">];</span><span class="nb">NaN</span><span class="p">;</span><span class="n">thetahat21</span><span class="p">[</span><span class="mi">5</span><span class="o">:</span><span class="k">end</span><span class="p">]]</span>
+<span class="c"># ----- GARCH (2,2) --------</span>
+<span class="n">thetastart22</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.0</span><span class="p">;</span> <span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">;</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-&gt;</span> <span class="o">-</span><span class="n">sum</span><span class="p">(</span><span class="n">garch22</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">thetahat22</span><span class="p">,</span> <span class="n">logL22</span><span class="p">,</span> <span class="n">junk</span>  <span class="o">=</span> <span class="n">fmincon</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">thetastart22</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[</span><span class="o">-</span><span class="nb">Inf</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">Inf</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">Garch11</span><span class="o">=</span><span class="n">thetahat11</span><span class="p">,</span> <span class="n">Garch12</span><span class="o">=</span><span class="n">thetahat12</span><span class="p">,</span> <span class="n">Garch21</span><span class="o">=</span><span class="n">thetahat21</span><span class="p">,</span> <span class="n">Garch22</span><span class="o">=</span><span class="n">thetahat22</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Garch11</th><th>Garch12</th><th>Garch21</th><th>Garch22</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>7 rows × 4 columns</p><tr><th>1</th><td>0.140994</td><td>0.154685</td><td>0.140364</td><td>0.15666</td></tr><tr><th>2</th><td>-0.0651047</td><td>-0.0625597</td><td>-0.0648475</td><td>-0.0619131</td></tr><tr><th>3</th><td>0.851438</td><td>1.07594</td><td>0.865024</td><td>1.23001</td></tr><tr><th>4</th><td>0.136657</td><td>0.0990965</td><td>0.135225</td><td>0.0968289</td></tr><tr><th>5</th><td>NaN</td><td>0.0727597</td><td>NaN</td><td>0.098626</td></tr><tr><th>6</th><td>0.606273</td><td>0.50403</td><td>0.603706</td><td>0.338286</td></tr><tr><th>7</th><td>NaN</td><td>NaN</td><td>6.66914e-24</td><td>0.0955641</td></tr></tbody></table></div></div>
+</div>
+<p>The numbers correspond to the following estimates: 1 = <span class="math notranslate nohighlight">\(\hat\mu\)</span> ; 2 = <span class="math notranslate nohighlight">\(\hat\rho\)</span> ; 3 = <span class="math notranslate nohighlight">\(\hat\omega\)</span> ; 4 = <span class="math notranslate nohighlight">\(\hat\alpha_{1}\)</span> ; 5 = <span class="math notranslate nohighlight">\(\hat\alpha_{2}\)</span> ; 6 = <span class="math notranslate nohighlight">\(\hat\beta_{1}\)</span> ; 7 = <span class="math notranslate nohighlight">\(\hat\beta_{2}\)</span></p>
+</div>
+</div>
+<div class="section" id="b-calculate-aic-for-all-four-models-above">
+<h2>(2.b) Calculate AIC for all four models above.<a class="headerlink" href="#b-calculate-aic-for-all-four-models-above" title="Permalink to this headline">¶</a></h2>
+<p>The formulation I have used:</p>
+<div class="math notranslate nohighlight">
+\[\text{AIC} = 2k-2\,\text{ln}(L)\]</div>
+<p>Where <span class="math notranslate nohighlight">\(k\)</span> is the number of parameters of our model (level of <em>complexity</em> of the model) and ln<span class="math notranslate nohighlight">\((L)\)</span> is the log likelihood (how well our model performs). We seek for a model that is able to explain the most in the simplest way, and due to this tradeoff, one should choose the model that yields the lowest AIC.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">AIC</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">AIC</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL11</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="mi">5</span><span class="p">;</span>
+<span class="n">AIC</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL12</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="mi">6</span><span class="p">;</span>
+<span class="n">AIC</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL21</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="mi">6</span><span class="p">;</span>
+<span class="n">AIC</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL22</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="mi">7</span><span class="p">;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">Models</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Garch(1,1)&quot;</span><span class="p">,</span> <span class="s">&quot;Garch(1,2)&quot;</span><span class="p">,</span> <span class="s">&quot;Garch(2,1)&quot;</span><span class="p">,</span> <span class="s">&quot;Garch(2,2)&quot;</span><span class="p">],</span> <span class="n">AIC_Value</span><span class="o">=</span><span class="n">AIC</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Models</th><th>AIC_Value</th></tr><tr><th></th><th>String</th><th>Float64</th></tr></thead><tbody><p>4 rows × 2 columns</p><tr><th>1</th><td>Garch(1,1)</td><td>-985.265</td></tr><tr><th>2</th><td>Garch(1,2)</td><td>-982.182</td></tr><tr><th>3</th><td>Garch(2,1)</td><td>-982.627</td></tr><tr><th>4</th><td>Garch(2,2)</td><td>-979.991</td></tr></tbody></table></div></div>
+</div>
+</div>
+<div class="section" id="c-calculate-bic-for-all-four-models-above">
+<h2>(2.c) Calculate BIC for all four models above.<a class="headerlink" href="#c-calculate-bic-for-all-four-models-above" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[\text{BIC}=\text{ln}\,(n)k-2\,\text{ln}\,(L)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">BIC</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">BIC</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL11</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="p">;</span>
+<span class="n">BIC</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL12</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">;</span>
+<span class="n">BIC</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL21</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">;</span>
+<span class="n">BIC</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">logL22</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mi">7</span><span class="p">;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">Models</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Garch(1,1)&quot;</span><span class="p">,</span> <span class="s">&quot;Garch(1,2)&quot;</span><span class="p">,</span> <span class="s">&quot;Garch(2,1)&quot;</span><span class="p">,</span> <span class="s">&quot;Garch(2,2)&quot;</span><span class="p">],</span> <span class="n">BIC_Value</span><span class="o">=</span><span class="n">BIC</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Models</th><th>BIC_Value</th></tr><tr><th></th><th>String</th><th>Float64</th></tr></thead><tbody><p>4 rows × 2 columns</p><tr><th>1</th><td>Garch(1,1)</td><td>-967.618</td></tr><tr><th>2</th><td>Garch(1,2)</td><td>-961.006</td></tr><tr><th>3</th><td>Garch(2,1)</td><td>-961.451</td></tr><tr><th>4</th><td>Garch(2,2)</td><td>-955.285</td></tr></tbody></table></div></div>
+</div>
+</div>
+<div class="section" id="d-choose-the-optimal-model-i-e-choose-the-combination-of-p-q-that-maximizes-either-aic-or-bic-and-explain-your-result">
+<h2>(2.d) Choose the optimal model (i.e., choose the combination of (p,q) that maximizes either AIC or BIC) and explain your result.<a class="headerlink" href="#d-choose-the-optimal-model-i-e-choose-the-combination-of-p-q-that-maximizes-either-aic-or-bic-and-explain-your-result" title="Permalink to this headline">¶</a></h2>
+<p>The  volatility  of  Google  returns  has  been  modelled  for  a  period  of  2020-05-12  to  2021-05-12  using  different  GARCH(p,q) models; GARCH(1,1), GARCH(1,2), GARCH(2,1) and GARCH(2,2).</p>
+<p>Overall, GARCH(1,1) outperformed the other models as observed from the smallest AIC and BIC values: it gives the optimal tradeoff between complexity and accuracy. Put it simply, it can describe almost as much as the others but without the need of more than one lag.</p>
+<p>Therefore, we see that a GARCH (1,1) model has satisfactory statistical properties to capture volatility in the data when analysing stock returs.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Naia Ormaza Zulueta<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
