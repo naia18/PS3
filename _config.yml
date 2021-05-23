@@ -1,0 +1,8 @@
+# Book settings
+title: Econometrics II - Problem Set 3
+author: Naia Ormaza Zulueta
+logo: logi.jpg
+
+latex:
+  latex_documents:
+    targetname: book.tex
