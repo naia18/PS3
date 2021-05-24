@@ -313,7 +313,6 @@
 <span class="k">using</span> <span class="n">Distributions</span><span class="p">,</span> <span class="n">Statistics</span>
 <span class="k">using</span> <span class="n">Optim</span><span class="p">,</span> <span class="n">NLopt</span>
 <span class="k">using</span> <span class="n">LinearAlgebra</span>
-<span class="k">using</span> <span class="n">Dates</span>
 <span class="k">import</span> <span class="n">Random</span>
 
 <span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">14052021</span><span class="p">)</span>
@@ -526,7 +525,7 @@
 </div>
 <div class="section" id="conclusions">
 <h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h2>
-<p>The size distribution of cities and the evolution of urban systems have been long-standing topics of research in urban studies, and we can appreaciate why computing the Pareto distribution of a specific country could be interesting: in this Problem Set, even if we analyse very distinct countries in many aspects (demography, geography, topography, total population, culture, history, etc.), Pareto Laws are observable. How the population is distributed in cities is, at least, a comparable characteristic between Japan and Russia. What these Pareto Laws could foresee, however, is out of the scope of this  project.</p>
+<p>The size distribution of cities and the evolution of urban systems have been long-standing topics of research in urban studies, and we can appreaciate why computing the Pareto distribution of a specific country could be interesting: in this Problem Set, even if we analyse very distinct countries in many aspects (demography, geography, topography, total population, culture, history, etc.), Pareto Laws are observable. How the population is distributed in cities is, at least, a comparable characteristic between Japan and Russia (here we are interested on the shape of the distribution). What these Pareto Laws could foresee, however, is out of the scope of this  project.</p>
 </div>
 </div>
 <div class="section" id="exercise-2">
@@ -595,7 +594,8 @@
 <h3>Garch(p,q) functions<a class="headerlink" href="#garch-p-q-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">garch11</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># ----- GARCH (1,1) --------</span>
+<span class="k">function</span> <span class="n">garch11</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="c"># dissect the parameter vector</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">rho</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -614,7 +614,7 @@
     <span class="k">end</span>
     <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
 <span class="k">end</span>
-
+<span class="c"># ----- GARCH (1,2) --------</span>
 <span class="k">function</span> <span class="n">garch12</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="c"># dissect the parameter vector</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -637,7 +637,7 @@
     <span class="k">end</span>
     <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
 <span class="k">end</span>
-
+<span class="c"># ----- GARCH (2,1) --------</span>
 <span class="k">function</span> <span class="n">garch21</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="c"># dissect the parameter vector</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -659,7 +659,7 @@
     <span class="k">end</span>
     <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="nb">pi</span><span class="p">))</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">.-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rsq</span><span class="o">./</span><span class="n">h</span>    <span class="c"># h = \sigma^2</span>
 <span class="k">end</span>
-
+<span class="c"># ----- GARCH (2,2) --------</span>
 <span class="k">function</span> <span class="n">garch22</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="c"># dissect the parameter vector</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -720,7 +720,7 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Garch11</th><th>Garch12</th><th>Garch21</th><th>Garch22</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>7 rows × 4 columns</p><tr><th>1</th><td>0.140994</td><td>0.154685</td><td>0.140364</td><td>0.15666</td></tr><tr><th>2</th><td>-0.0651047</td><td>-0.0625597</td><td>-0.0648475</td><td>-0.0619131</td></tr><tr><th>3</th><td>0.851438</td><td>1.07594</td><td>0.865024</td><td>1.23001</td></tr><tr><th>4</th><td>0.136657</td><td>0.0990965</td><td>0.135225</td><td>0.0968289</td></tr><tr><th>5</th><td>NaN</td><td>0.0727597</td><td>NaN</td><td>0.098626</td></tr><tr><th>6</th><td>0.606273</td><td>0.50403</td><td>0.603706</td><td>0.338286</td></tr><tr><th>7</th><td>NaN</td><td>NaN</td><td>6.66914e-24</td><td>0.0955641</td></tr></tbody></table></div></div>
 </div>
-<p>The numbers correspond to the following estimates: 1 = <span class="math notranslate nohighlight">\(\hat\mu\)</span> ; 2 = <span class="math notranslate nohighlight">\(\hat\rho\)</span> ; 3 = <span class="math notranslate nohighlight">\(\hat\omega\)</span> ; 4 = <span class="math notranslate nohighlight">\(\hat\alpha_{1}\)</span> ; 5 = <span class="math notranslate nohighlight">\(\hat\alpha_{2}\)</span> ; 6 = <span class="math notranslate nohighlight">\(\hat\beta_{1}\)</span> ; 7 = <span class="math notranslate nohighlight">\(\hat\beta_{2}\)</span></p>
+<p>The numbers correspond to: 1 = <span class="math notranslate nohighlight">\(\hat\mu\)</span> ; 2 = <span class="math notranslate nohighlight">\(\hat\rho\)</span> ; 3 = <span class="math notranslate nohighlight">\(\hat\omega\)</span> ; 4 = <span class="math notranslate nohighlight">\(\hat\alpha_{1}\)</span> ; 5 = <span class="math notranslate nohighlight">\(\hat\alpha_{2}\)</span> ; 6 = <span class="math notranslate nohighlight">\(\hat\beta_{1}\)</span> ; 7 = <span class="math notranslate nohighlight">\(\hat\beta_{2}\)</span></p>
 </div>
 </div>
 <div class="section" id="b-calculate-aic-for-all-four-models-above">
@@ -741,13 +741,14 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Models</th><th>AIC_Value</th></tr><tr><th></th><th>String</th><th>Float64</th></tr></thead><tbody><p>4 rows × 2 columns</p><tr><th>1</th><td>Garch(1,1)</td><td>-985.265</td></tr><tr><th>2</th><td>Garch(1,2)</td><td>-982.182</td></tr><tr><th>3</th><td>Garch(2,1)</td><td>-982.627</td></tr><tr><th>4</th><td>Garch(2,2)</td><td>-979.991</td></tr></tbody></table></div></div>
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Models</th><th>AIC_Value</th></tr><tr><th></th><th>String</th><th>Float64</th></tr></thead><tbody><p>4 rows × 2 columns</p><tr><th>1</th><td>Garch(1,1)</td><td>-985.265</td></tr><tr><th>2</th><td>Garch(1,2)</td><td>-983.021</td></tr><tr><th>3</th><td>Garch(2,1)</td><td>-983.464</td></tr><tr><th>4</th><td>Garch(2,2)</td><td>-980.907</td></tr></tbody></table></div></div>
 </div>
 </div>
 <div class="section" id="c-calculate-bic-for-all-four-models-above">
 <h2>(2.c) Calculate BIC for all four models above.<a class="headerlink" href="#c-calculate-bic-for-all-four-models-above" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[\text{BIC}=\text{ln}\,(n)k-2\,\text{ln}\,(L)\]</div>
+<p>Where, as before, <span class="math notranslate nohighlight">\(k\)</span> is the number of parameters of our model (level of <em>complexity</em> of the model) and ln<span class="math notranslate nohighlight">\((L)\)</span> is the log likelihood (how well our model performs).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">BIC</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -760,7 +761,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Models</th><th>BIC_Value</th></tr><tr><th></th><th>String</th><th>Float64</th></tr></thead><tbody><p>4 rows × 2 columns</p><tr><th>1</th><td>Garch(1,1)</td><td>-967.618</td></tr><tr><th>2</th><td>Garch(1,2)</td><td>-961.006</td></tr><tr><th>3</th><td>Garch(2,1)</td><td>-961.451</td></tr><tr><th>4</th><td>Garch(2,2)</td><td>-955.285</td></tr></tbody></table></div></div>
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Models</th><th>BIC_Value</th></tr><tr><th></th><th>String</th><th>Float64</th></tr></thead><tbody><p>4 rows × 2 columns</p><tr><th>1</th><td>Garch(1,1)</td><td>-967.618</td></tr><tr><th>2</th><td>Garch(1,2)</td><td>-961.845</td></tr><tr><th>3</th><td>Garch(2,1)</td><td>-962.288</td></tr><tr><th>4</th><td>Garch(2,2)</td><td>-956.201</td></tr></tbody></table></div></div>
 </div>
 </div>
 <div class="section" id="d-choose-the-optimal-model-i-e-choose-the-combination-of-p-q-that-maximizes-either-aic-or-bic-and-explain-your-result">
