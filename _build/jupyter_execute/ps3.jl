@@ -5,7 +5,6 @@ using Plots
 using Distributions, Statistics
 using Optim, NLopt
 using LinearAlgebra
-using Dates
 import Random
 
 Random.seed!(14052021)
@@ -148,6 +147,7 @@ y = 100.0*diff(log.(y));               # Compute log-returns
 n = size(y,1);
 last(data,7)
 
+# ----- GARCH (1,1) --------
 function garch11(theta, y)
     # dissect the parameter vector
     mu = theta[1]
@@ -167,7 +167,7 @@ function garch11(theta, y)
     end
     logL = -log(sqrt(2.0*pi)) .- 0.5*log.(h) .- 0.5*rsq./h    # h = \sigma^2
 end
-
+# ----- GARCH (1,2) --------
 function garch12(theta, y)
     # dissect the parameter vector
     mu = theta[1]
@@ -190,7 +190,7 @@ function garch12(theta, y)
     end
     logL = -log(sqrt(2.0*pi)) .- 0.5*log.(h) .- 0.5*rsq./h    # h = \sigma^2
 end
-
+# ----- GARCH (2,1) --------
 function garch21(theta, y)
     # dissect the parameter vector
     mu = theta[1]
@@ -212,7 +212,7 @@ function garch21(theta, y)
     end
     logL = -log(sqrt(2.0*pi)) .- 0.5*log.(h) .- 0.5*rsq./h    # h = \sigma^2
 end
-
+# ----- GARCH (2,2) --------
 function garch22(theta, y)
     # dissect the parameter vector
     mu = theta[1]
